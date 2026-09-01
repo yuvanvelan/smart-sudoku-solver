@@ -1,16 +1,17 @@
 """
 Smart Sudoku Solver
-Main entry point for the application.
+Main desktop application entry point.
 """
 
+import tkinter as tk
+from src.gui import SudokuGUI
+
+
 def main() -> None:
-    """Prints startup message indicating setup is complete."""
-    print("==========================================")
-    print("       Smart Sudoku Solver (AI)           ")
-    print("==========================================")
-    print("Project initialized successfully.")
-    print("Current Phase: Phase 1 (Project Setup)")
-    print("==========================================")
+    """Initializes and runs the Tkinter Smart Sudoku Solver application."""
+    root = tk.Tk()
+    app = SudokuGUI(root)
+    root.mainloop()
 
 
 if __name__ == "__main__":
