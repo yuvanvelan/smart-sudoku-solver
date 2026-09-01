@@ -1,0 +1,3 @@
+"""
+Smart Sudoku Solver package.
+"""
