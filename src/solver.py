@@ -196,6 +196,46 @@ class SudokuSolver:
         # Step 5: No candidate led to a valid solution (contradiction or domain exhausted)
         return False
 
+    def count_solutions(self, board: SudokuBoard, limit: int = 2) -> int:
+        """
+        Counts the number of valid solutions for a given board up to a limit.
+
+        Uses MRV backtracking search to quickly determine solution multiplicity
+        (e.g., limit=2 to check for uniqueness).
+
+        :param board: The SudokuBoard instance to analyze.
+        :param limit: Maximum number of solutions to count before stopping early.
+        :return: Integer count of solutions found (0, 1, ..., up to limit).
+        """
+        if not isinstance(board, SudokuBoard) or not board.is_valid_board():
+            return 0
+
+        count = 0
+
+        def _count_recursive(b: SudokuBoard) -> None:
+            nonlocal count
+            if count >= limit:
+                return
+
+            cell = self.select_unassigned_variable_mrv(b)
+            if cell is None:
+                # Found a valid complete solution
+                count += 1
+                return
+
+            row, col = cell
+            candidates = self.get_candidates(b, row, col)
+            for val in candidates:
+                b.set_cell(row, col, val)
+                _count_recursive(b)
+                b.set_cell(row, col, SudokuBoard.EMPTY_CELL)
+                if count >= limit:
+                    break
+
+        working_copy = board.copy()
+        _count_recursive(working_copy)
+        return count
+
     def get_stats(self) -> Dict[str, Union[int, float]]:
         """
         Returns solver search statistics from the most recent run.
