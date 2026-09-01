@@ -88,6 +88,24 @@ class TestSudokuGUI(unittest.TestCase):
         status_text = self.app.status_label.cget("text")
         self.assertIn("Invalid puzzle", status_text)
 
+    def test_difficulty_selection(self) -> None:
+        """Setting difficulty should update current_difficulty and status."""
+        for diff in ["easy", "medium", "hard", "expert"]:
+            self.app.set_difficulty(diff)
+            self.assertEqual(self.app.current_difficulty, diff)
+            self.assertIn(diff.capitalize(), self.app.status_label.cget("text"))
+
+    def test_clear_grid_action(self) -> None:
+        """Clearing the grid should empty all cells and initial clues."""
+        self.app.on_create_sudoku()
+        self.assertGreater(len(self.app.initial_clues), 0)
+
+        self.app.clear_grid()
+        self.assertEqual(len(self.app.initial_clues), 0)
+        grid = self.app.get_grid_values()
+        self.assertTrue(all(val == 0 for row in grid for val in row))
+        self.assertEqual(self.app.status_label.cget("text"), "Board cleared")
+
 
 if __name__ == "__main__":
     unittest.main()
