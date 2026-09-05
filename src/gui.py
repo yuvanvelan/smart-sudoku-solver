@@ -270,7 +270,7 @@ class SudokuGUI:
 
     # Puzzle State Palette
     COLOR_CELL_CLUE_BG = "#0F172A"      # Distinct background for initial puzzle clues
-    COLOR_CELL_CLUE_FG = "#38BDF8"      # Bright Sky Blue for initial clues (Bold)
+    COLOR_CELL_CLUE_FG = "#FFFFFF"      # Crisp white for initial clues (Bold)
     COLOR_CELL_SOLVED_BG = "#172554"    # Indigo/Blue tint for AI-solved cells
     COLOR_CELL_SOLVED_FG = "#60A5FA"    # Vibrant electric blue for AI-solved numbers
 
